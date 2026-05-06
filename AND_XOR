@@ -1,0 +1,26 @@
+# Input string
+text = input("Enter a string: ")
+
+and_result = ""
+xor_result = ""
+
+print("\nCharacter | ASCII | AND(127) | XOR(127)")
+print("----------------------------------------")
+
+for ch in text: #loops throiugh each character
+    ascii_val = ord(ch)
+
+    # AND operation
+    and_val = ascii_val & 127
+    and_char = chr(and_val)
+    and_result += and_char
+
+    # XOR operation
+    xor_val = ascii_val ^ 127
+    xor_char = chr(xor_val)
+    xor_result += xor_char
+
+    print(f"{ch:^9} | {ascii_val:^5} | {and_val:^8} | {xor_val:^8}")
+
+print("\nFinal AND Result :", and_result)
+print("Final XOR Result :", repr(xor_result))
