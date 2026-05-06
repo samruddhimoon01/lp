@@ -1,0 +1,27 @@
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
+from Crypto.Random import get_random_bytes
+
+# AES key must be 16, 24, or 32 bytes
+key = b'1134567890113456'   # 16 bytes (AES-128)
+
+# Generate random IV (Initialization Vector)
+iv = get_random_bytes(16)
+
+# ------------------ ENCRYPTION ------------------
+plaintext = input("Enter message: ").encode()
+
+cipher = AES.new(key, AES.MODE_CBC, iv)
+
+# Pad plaintext to block size (16 bytes)
+ciphertext = cipher.encrypt(pad(plaintext, AES.block_size))
+
+print("\nEncrypted message:", ciphertext)
+print("IV:", iv)
+
+# ------------------ DECRYPTION ------------------
+decipher = AES.new(key, AES.MODE_CBC, iv)
+
+decrypted_text = unpad(decipher.decrypt(ciphertext), AES.block_size)
+
+print("Decrypted message:", decrypted_text.decode())
