@@ -1,0 +1,70 @@
+# -------------------- Graph Coloring --------------------
+
+G = [
+    [0, 1, 1, 0, 1, 0],
+    [1, 0, 1, 1, 0, 1],
+    [1, 1, 0, 1, 0, 0],
+    [0, 1, 1, 0, 0, 1],
+    [1, 0, 0, 0, 0, 1],
+    [0, 1, 0, 1, 1, 0]
+]
+
+node = "abcdef"
+
+# Assign index
+t_ = {}
+
+for i in range(len(G)):
+    t_[node[i]] = i
+
+# Count degree of nodes
+degree = []
+
+for i in range(len(G)):
+    degree.append(sum(G[i]))
+
+# Available colors
+colorDict = {}
+
+for i in range(len(G)):
+    colorDict[node[i]] = ["Blue", "Red", "Yellow", "Green"]
+
+# Sorting nodes based on degree (Selection Sort)
+sortedNode = []
+indeks = []
+
+for i in range(len(degree)):
+
+    max_deg = -1
+    idx = 0
+
+    for j in range(len(degree)):
+
+        if j not in indeks and degree[j] > max_deg:
+            max_deg = degree[j]
+            idx = j
+
+    indeks.append(idx)
+    sortedNode.append(node[idx])
+
+# Main coloring
+theSolution = {}
+
+for n in sortedNode:
+
+    setTheColor = colorDict[n].copy()
+
+    theSolution[n] = setTheColor[0]
+
+    adjacentNode = G[t_[n]]
+
+    for j in range(len(adjacentNode)):
+
+        if adjacentNode[j] == 1:
+
+            if setTheColor[0] in colorDict[node[j]]:
+                colorDict[node[j]].remove(setTheColor[0])
+
+# Print solution
+for k, v in sorted(theSolution.items()):
+    print("Node", k, "=", v)
